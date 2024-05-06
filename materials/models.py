@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from users.models import User
@@ -10,7 +11,7 @@ class Course(models.Model):
     )
     description = models.TextField(verbose_name="описание")
     owner = models.ForeignKey(
-        User, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
     )
 
     def __str__(self):
@@ -37,7 +38,7 @@ class Lesson(models.Model):
     )
     video = models.FileField(upload_to="video_lesson", blank=True, null=True)
     owner = models.ForeignKey(
-        User, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
     )
 
     def __str__(self):
@@ -46,3 +47,26 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "урок"
         verbose_name_plural = "уроки"
+        ordering = ("name",)
+
+
+class CourseSubscription(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="подписчик",
+        null=True,
+        blank=True)
+
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="курс")
+
+    class Meta:
+        verbose_name = 'подписка на курс'
+        verbose_name_plural = "подписки на курс"
+
+    def __str__(self):
+        return f'{self.user} {self.course}'
+    

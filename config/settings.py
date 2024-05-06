@@ -83,8 +83,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "homeworksdrf",
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        "NAME": "omeworksdrf",
         "USER": "postgres",
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "PORT": "5432",
@@ -132,8 +132,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [

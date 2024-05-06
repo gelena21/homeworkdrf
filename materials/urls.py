@@ -1,12 +1,13 @@
 from django.urls import path
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from materials.views import (CourseAPIViewSet, LessonCreateAPIView,
                              LessonDestroyAPIView, LessonListAPIView,
-                             LessonRetrieveAPIView, LessonUpdateAPIView)
+                             LessonRetrieveAPIView, LessonUpdateAPIView,
+                             SubscribeCourseAPIViewSet)
 
-router = SimpleRouter()
-router.register("course", CourseAPIViewSet)
+router = DefaultRouter()
+router.register(r'course', CourseAPIViewSet, basename='course')
 
 urlpatterns = [
     path("lessons/", LessonListAPIView.as_view(), name="lessons_list"),
@@ -19,6 +20,10 @@ urlpatterns = [
     ),
     path(
         "lesson/<int:pk>/delete/", LessonDestroyAPIView.as_view(), name="lesson_destroy"
+    ),
+    path(
+        'subscription/',SubscribtionCourseAPIView.as_view(),
+        name='subscription'
     ),
 ]
 
