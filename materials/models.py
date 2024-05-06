@@ -36,7 +36,7 @@ class Lesson(models.Model):
     preview = models.ImageField(
         upload_to="lesson_preview", verbose_name="превью", null=True, blank=True
     )
-    video = models.FileField(upload_to="video_lesson", blank=True, null=True)
+    video = models.CharField(upload_to="video_lesson", blank=True, null=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
     )
@@ -69,4 +69,3 @@ class CourseSubscription(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.course}'
-    

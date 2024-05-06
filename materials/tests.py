@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
@@ -26,7 +27,8 @@ class LessonsTest(APITestCase):
     def test_create_lesson(self):
         """CREATE TEST"""
         data = {'name': 'test', 'description': 'test description'}
-        response = self.client.post('/materials/lesson/create/', data=data)
+        url = reverse('lesson_create')
+        response = self.client.post(url, data=data)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_lesson(self):

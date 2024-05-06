@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from materials.views import (CourseAPIViewSet, LessonCreateAPIView,
                              LessonDestroyAPIView, LessonListAPIView,
                              LessonRetrieveAPIView, LessonUpdateAPIView,
-                             SubscribeCourseAPIViewSet)
+                             SubscribtionCourseAPIView)
 
 router = DefaultRouter()
-router.register(r'course', CourseAPIViewSet, basename='course')
+router.register("course", CourseAPIViewSet)
 
 urlpatterns = [
     path("lessons/", LessonListAPIView.as_view(), name="lessons_list"),
@@ -22,7 +22,7 @@ urlpatterns = [
         "lesson/<int:pk>/delete/", LessonDestroyAPIView.as_view(), name="lesson_destroy"
     ),
     path(
-        'subscription/',SubscribtionCourseAPIView.as_view(),
+        'subscription/', SubscribtionCourseAPIView.as_view(),
         name='subscription'
     ),
 ]
