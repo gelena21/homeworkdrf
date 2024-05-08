@@ -32,7 +32,8 @@ class LessonsTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_lesson(self):
-        response = self.client.get('/materials/lessons/')
+        url = reverse('lesson_list')
+        response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.json(), {
             'count': 1,
@@ -56,7 +57,9 @@ class LessonsTest(APITestCase):
         )
 
         response = self.client.get(
-            f'/materials/lesson/{les_detail.id}/detail/')
+            reverse('lesson_detail',
+                    args=[les_detail.id])
+        )
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.json(), {
@@ -76,7 +79,7 @@ class LessonsTest(APITestCase):
         )
 
         response = self.client.patch(
-            f'/materials/lesson/{lesson.id}/update/',
+            reverse('lesson_update', args=[lesson.id]),
             data={'name': 'new_testing_name'}
         )
 
@@ -91,7 +94,7 @@ class LessonsTest(APITestCase):
         )
 
         response = self.client.delete(
-            f'/materials/lesson/{lesson.id}/delete/',
+            reverse('lesson_destroy', args=[lesson.id]),
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -123,7 +126,8 @@ class SubscriptionTestCase(APITestCase):
             "course": self.course.id,
         }
 
-        response = self.client.post('/materials/subscription/', data=data)
+        url = reverse('subscription')
+        response = self.client.post(url, data=data)
 
         self.assertEquals(
             response.status_code,

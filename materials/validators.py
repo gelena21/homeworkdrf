@@ -1,3 +1,5 @@
+from rest_framework.exceptions import ValidationError
+
 allowed_resource = 'youtube.com'
 
 
@@ -9,4 +11,4 @@ class ValidateURLResource():
     def __call__(self, value):
         url = value.get(self.field)
         if url and not url.startswith('https://www.youtube.com/'):
-            raise ValueError('Cторонние видео запрещены')
+            raise ValidationError('Cторонние видео запрещены')
