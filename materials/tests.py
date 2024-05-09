@@ -32,7 +32,7 @@ class LessonsTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_lesson(self):
-        url = reverse('lesson_list')
+        url = reverse('lessons_list')
         response = self.client.get(url)
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.json(), {
@@ -40,13 +40,13 @@ class LessonsTest(APITestCase):
             'next': None,
             'previous': None,
             'results': [{
-                'id': 7,
-                'name': 'begining',
+                'id': 6,
+                'name': 'detail',
                 'description': 'description',
                 'preview': None,
-                'video': 'http://testserver/youtube.com/watch/000',
+                'video': 'http://testserver/youtube.com/watch/123456',
                 'course': None,
-                'owner': 4}]})
+                'owner': 3}]})
 
     def test_detail_lesson(self):
         les_detail = Lesson.objects.create(
