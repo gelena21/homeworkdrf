@@ -8,7 +8,7 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
-        validators = [ValidateURLResource(field='video')]
+        validators = [ValidateURLResource(field="video")]
 
     def create(self, validated_data):
         user = self.context["request"].user
@@ -24,7 +24,7 @@ class CourseSerializer(serializers.ModelSerializer):
     course_subscribe = serializers.SerializerMethodField()
 
     def get_course_subscribe(self, instance):
-        user = self.context['request'].user
+        user = self.context["request"].user
         if CourseSubscription.objects.filter(user=user, course=instance).exists():
             return True
         return False
@@ -47,4 +47,4 @@ class CourseSerializer(serializers.ModelSerializer):
 class CourseSubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         models = CourseSubscription
-        fields = '__all__'
+        fields = "__all__"

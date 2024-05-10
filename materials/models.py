@@ -11,7 +11,11 @@ class Course(models.Model):
     )
     description = models.TextField(verbose_name="описание")
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        verbose_name="владелец",
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -38,7 +42,11 @@ class Lesson(models.Model):
     )
     video = models.CharField(blank=True, null=True)
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, verbose_name="владелец", blank=True, null=True
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        verbose_name="владелец",
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -52,20 +60,14 @@ class Lesson(models.Model):
 
 class CourseSubscription(models.Model):
     user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="подписчик",
-        null=True,
-        blank=True)
+        User, on_delete=models.CASCADE, verbose_name="подписчик", null=True, blank=True
+    )
 
-    course = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE,
-        verbose_name="курс")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="курс")
 
     class Meta:
-        verbose_name = 'подписка на курс'
+        verbose_name = "подписка на курс"
         verbose_name_plural = "подписки на курс"
 
     def __str__(self):
-        return f'{self.user} {self.course}'
+        return f"{self.user} {self.course}"

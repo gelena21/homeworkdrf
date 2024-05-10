@@ -1,14 +1,22 @@
 import django_filters.rest_framework
 from rest_framework.filters import SearchFilter
-from rest_framework.generics import (CreateAPIView, ListAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from users.models import Payment, User
 from users.permissions import IsOwnerOrStaff
-from users.serializes import (PaymentSerializer, UserPaymentSerializer,
-                              UserSerializer, UserSerializerCreate)
+from users.serializes import (
+    PaymentSerializer,
+    UserPaymentSerializer,
+    UserSerializer,
+    UserSerializerCreate, PaymentApiSerializer,
+)
+from users.services import create_stripe_product, create_stripe_price, create_stripe_sessions, convert_rub_to_dollars
 
 
 class UsersPaymentsAPIViewSet(ModelViewSet):
@@ -41,3 +49,17 @@ class UserRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsOwnerOrStaff]
+
+
+class PaymentApiView(CreateAPIView):
+    serializer_class = PaymentApiSerializer
+    queryset = Payment.objects.all()
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        amount_in_dollars = convert_rub_to_dollars(payment.amount)
+        price = create_stripe_price(amount_in_dollars)
+        session_id, payment_link = create_stripe_sessions(price)
+        payment.sessions_id = session_id
+        payment.link = payment_link
+        payment.save()
