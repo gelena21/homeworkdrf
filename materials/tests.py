@@ -34,8 +34,8 @@ class LessonsTest(APITestCase):
     def test_list_lesson(self):
         url = reverse("lessons_list")
         response = self.client.get(url)
-        self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
             response.json(),
             {
                 "count": 1,
@@ -43,13 +43,13 @@ class LessonsTest(APITestCase):
                 "previous": None,
                 "results": [
                     {
-                        "id": 6,
-                        "name": "detail",
+                        "id": 1,
+                        "name": "begining",
                         "description": "description",
                         "preview": None,
-                        "video": "http://testserver/youtube.com/watch/123456",
+                        "video": 'youtube.com/watch/000',
                         "course": None,
-                        "owner": 3,
+                        "owner": 1,
                     }
                 ],
             },
@@ -65,17 +65,17 @@ class LessonsTest(APITestCase):
 
         response = self.client.get(reverse("lesson_detail", args=[les_detail.id]))
 
-        self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
             response.json(),
             {
-                "id": 6,
+                "id": 2,
                 "name": "detail",
                 "description": "description",
                 "preview": None,
-                "video": "http://testserver/youtube.com/watch/123456",
+                "video": "youtube.com/watch/123456",
                 "course": None,
-                "owner": 3,
+                "owner": 1,
             },
         )
 
