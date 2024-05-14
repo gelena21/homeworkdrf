@@ -14,9 +14,15 @@ from users.serializes import (
     PaymentSerializer,
     UserPaymentSerializer,
     UserSerializer,
-    UserSerializerCreate, PaymentApiSerializer,
+    UserSerializerCreate,
+    PaymentApiSerializer,
 )
-from users.services import create_stripe_product, create_stripe_price, create_stripe_sessions, convert_rub_to_dollars
+from users.services import (
+    create_stripe_product,
+    create_stripe_price,
+    create_stripe_sessions,
+    convert_rub_to_dollars,
+)
 
 
 class UsersPaymentsAPIViewSet(ModelViewSet):

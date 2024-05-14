@@ -1,4 +1,3 @@
-from forex_python.converter import CurrencyRates
 import stripe
 from config.settings import STRIPE_API_KEY
 
@@ -8,15 +7,13 @@ stripe.api_key = STRIPE_API_KEY
 def create_stripe_product(product_name):
     """Function to create a product in stripe"""
     stripe_product = stripe.Product.create(name=product_name)
-    return stripe_product['id']
+    return stripe_product["id"]
 
 
 def create_stripe_price(amount, product_id):
     """Создание цены в страйпе"""
     return stripe.Price.create(
-        currency="usd",
-        unit_amount=int(amount * 100),
-        product=product_id
+        currency="usd", unit_amount=int(amount * 100), product=product_id
     )
 
 

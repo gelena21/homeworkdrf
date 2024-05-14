@@ -47,7 +47,7 @@ class LessonsTest(APITestCase):
                         "name": "begining",
                         "description": "description",
                         "preview": None,
-                        "video": 'youtube.com/watch/000',
+                        "video": "youtube.com/watch/000",
                         "course": None,
                         "owner": 1,
                     }

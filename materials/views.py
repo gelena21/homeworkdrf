@@ -19,6 +19,7 @@ from materials.serializes import (
     LessonSerializer,
     CourseSubscriptionSerializer,
 )
+from materials.tasks import send_info_about_update_course
 
 
 class CourseAPIViewSet(ModelViewSet):
@@ -41,6 +42,13 @@ class CourseAPIViewSet(ModelViewSet):
         elif self.action == "destroy":
             self.permission_classes = [IsAuthenticated, IsOwner]
         return [permission() for permission in self.permission_classes]
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+        course_id = course.id
+
+        # send_info_about_update_course.delay(course_id)
+        send_info_about_update_course.delay(course_id)
 
     def get_queryset(self):
         my_queryset = Course.objects.all()

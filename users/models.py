@@ -51,19 +51,23 @@ class Payment(models.Model):
         null=True,
         blank=True,
     )
-    amount = models.PositiveIntegerField(
-        verbose_name='сумма оплаты'
-    )
+    amount = models.PositiveIntegerField(verbose_name="сумма оплаты")
     payment_type = models.CharField(
         max_length=28, choices=PaymentType.choices, verbose_name="способ оплаты"
     )
     sessions_id = models.CharField(
-        max_length=255, blank=True, null=True,
-        verbose_name='id сессии', help_text='укажите id сессии'
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="id сессии",
+        help_text="укажите id сессии",
     )
     link = models.URLField(
-        max_length=400, blank=True, null=True,
-        verbose_name='ссылка на оплату', help_text='укажите ссылку на оплату'
+        max_length=400,
+        blank=True,
+        null=True,
+        verbose_name="ссылка на оплату",
+        help_text="укажите ссылку на оплату",
     )
 
     class Meta:
@@ -72,6 +76,8 @@ class Payment(models.Model):
         ordering = ("user", "date")
 
     def __str__(self):
-        return (f'Пользователь: {self.user}\n'
-                f'Курс:  {self.course}\n'
-                f'Сумма: {self.amount}')
+        return (
+            f"Пользователь: {self.user}\n"
+            f"Курс:  {self.course}\n"
+            f"Сумма: {self.amount}"
+        )

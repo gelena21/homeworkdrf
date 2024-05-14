@@ -38,4 +38,4 @@ class UserSerializerCreate(serializers.ModelSerializer):
 class PaymentApiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = '__all__'
+        fields = "__all__"
